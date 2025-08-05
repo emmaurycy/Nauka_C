@@ -1,0 +1,106 @@
+/*Zadanie 7 Napisz program w którym osobna funkcja alokuje pamieć dla dwuwymiarowej tablicy typu int o rozmiarze n × m. Funkcja powinna działać dla dowolnych (m, n > 0) i wypełniać tablic  ̨e liczbami pseudolosowymi z zakresu od 2 do 100. Wartości n oraz m s  ̨a podane przez użytkownika, ale takie że n·m=1000. Napisz kolejn  a funkcje która, jako argumenty przyjmuje tablic  e (tab) i jej wymiary alokowan  ̨a przez pierwsz  ̨a funkcj  ̨e oraz liczb  ̨e całkowita 2 ¬ k ¬ 100 i wskaźnik do int. Funkcja powinna sprawdzać ile jest liczb w tablicy tab podzielnych przez k, tworzyć dynamicznie tablic̨e jednowymiarow  ̨a o takim rozmiarze i zapisywać tam te liczby. Funkcja powinna zwracać wskaźnik do tak zaalokowanej tablicy oraz zapisywać jej rozmiar w miejscu wskazywanym przez przekazany jej wskaźnik. Jeżeli w tablicy tab nie ma liczb podzielnych przez k funkcja powinna zwracać Null. Napisz osobna funkcje do wyświetlania liczb zapisanych w takiej tablicy (tj. tych podzielnych przez k) - pamietaj, że jej rozmiar b  ̨edzie zapisany w zmiennej do której wskazuje argument wskaźnikowy poprzedniej funkcji. Przetestuj działanie wszystkich funkcji w programie.*/
+
+int* create_array(int n, int m);
+int* search(int n, int m, int (*tab_2w)[m], int k, int* size);
+void print_k(int* tab_k, int* size);
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(){
+
+  int n, m, k, size;
+  int *tab_k, *wsk_size;
+  int (*tab_2w)[m];
+
+  wsk_size=&size;
+  
+  do{
+  printf("Podaj dwie liczby naturalne, których iloczyn wynosi 1000:\n");
+  scanf("%d %d", &n, &m);
+  if(n*m!=1000) printf("Podano złe liczby.\n");
+    }while(n*m!=1000);
+
+  tab_2w=create_array(n, m);
+
+  printf("\n----------------------------\n");
+
+  do{
+    printf("Podaj liczbę naturalną nie mniejszą od 2 i nie większą od 100:\n");
+    scanf("%d", &k);
+    if(k>100 || k<2) printf("Podano złą liczbę.\n");
+      }while(k>100 || k<2);
+
+  printf("\n----------------------------\n");
+  
+  tab_k=search(n, m, tab_2w, k, wsk_size);
+
+  print_k(tab_k, size);
+
+  free(tab_2w);
+  free(tab_k);
+  
+  return 0;
+}
+
+int* create_array(int n, int m){
+
+  int (*tab_2w)[m];
+  srand(time(NULL));
+
+  tab_2w=(int (*) [m]) malloc (n*m*sizeof(int));
+
+  for(int i=0; i<n; i++){
+    for(int j=0; j<m; j++){
+      tab_2w[i][j]=rand()%99+2;
+      printf("%d ", tab_2w[i][j]);
+    }
+    printf("\n");
+  }
+
+  return tab_2w;
+}
+
+int* search(int n, int m, int (*tab_2w)[m], int k, int* size){
+
+  int i, j, count=0;
+  int *tab_k;
+
+  for(i=0; i<n; i++){
+    for(j=0; j<m; j++){
+      if(tab_2w[i][j]%k==0) count++;
+    }
+  }
+  if(size==0) tab_k=NULL;
+  
+  printf("\nIlość liczb podzielnych przez k = %d\n", count);
+  
+  tab_k=(int *) malloc (count * sizeof(int));
+    
+  count=0;
+
+  for(i=0; i<n; i++){
+    for(j=0; j<m; j++){
+      if(tab_2w[i][j]%k==0){
+        *(tab_k+count)=tab_2w[i][j];
+        count++;
+      }
+    }
+  }
+
+  *size = count;
+
+  return tab_k;
+}
+
+void print_k(int* tab_k, int* size){
+
+  printf("\nLiczby podzielne przez k:\n");
+  
+  for(int i=0; i<size; i++)
+    printf("%d ", *(tab_k+i));
+
+  return 0;
+}
+
