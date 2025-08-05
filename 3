@@ -1,0 +1,35 @@
+/*
+Zadanie 3 Napisz funkcj ˛e number_of_substrings(), która pobiera dwa wskaźniki łańcuchowe. Funkcja powinna zliczać i zwracać liczb ˛e wyst ˛apień drugiego łańcucha w łańcuchu pierwszym.Uwaga: Funkcja powinna zliczać tylko wyst ˛apienia łańcuchów składaj ˛acych si ˛e z różnych znaków (różnych co do pozycji) tzw. ci ˛agów nienakładaj ˛acych si ˛e np. wywołanie funkcji
+number_of_substrings("mamama","mam") powinno zwracać 1 a nie 2.
+*/
+
+#include <stdio.h>
+#include <string.h>
+int number_of_substring(char *str1, char *str2);
+int main(void) {
+
+    printf("%d\n", number_of_substring("mamamamam", "mam"));
+
+    return 0;
+}
+int number_of_substring(char *str1, char *str2) {
+    int count = 0, i = 0, len = strlen(str2);
+    char *wsk = str2;
+    while (*str1) {
+        if (*str1 == *wsk) {
+            i++;
+            str1++; wsk++;
+            if (i == len) {
+                count++;
+                i = 0;
+                wsk = str2;
+            }
+        }
+        else {
+            str1++;
+            i = 0;
+            wsk = str2;
+        }
+    }
+    return count;
+}
