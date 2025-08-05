@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void fill_arr(int arr[], int size);
+void print_arr(int arr[], int size);
+void mean(int arr[], int size);
+
+int main() {
+    int *arr, n;
+    int i;
+    n=3;
+
+    arr = (int *)malloc(n * sizeof(int));
+
+    if (arr == NULL) printf("Błąd alokacji pamięci!\n");
+    
+    fill_arr(arr, n);
+    
+    print_arr(arr, n);
+
+    mean(arr, n);
+    
+    free(arr);
+
+    return 0;
+}
+void fill_arr(int arr[], int size){
+    int i;
+    
+    printf("Wprowadź %d liczb/y całkowitych:\n", size);
+    for (i = 0; i < size; i++) {
+        printf("Element %d: ", i+1);
+        scanf("%d", arr+i);
+    }
+    printf("\n");
+    return 0;
+}
+void print_arr(int arr[], int size){
+    int i;
+    
+    printf("Wprowadzone wartości:\n");
+    for (i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    return 0;
+}
+void mean(int arr[], int size){
+    int i, total=0;
+    float mean;
+
+    for (i = 0; i < size; i++) {
+        total+=*(arr+i);
+
+    mean=(float)total/(float)size;
+    }
+    printf("Średnia wynosi: %.2f", mean);    
+        
+    return 0;
+}
