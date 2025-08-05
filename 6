@@ -1,0 +1,69 @@
+/*Zadanie 5 Napisz funkcj  ̨e, która otrzymuje w argumentach dwie kwadratowe tablice dwuwymiarowe elementów typu int oraz ich wspólny wymiar, i zwraca jako wartość wynik dodawania macierzy przechowywanych w przekazanych argumentach. Wynik powinien zostać zwrócony w nowo utworzonej tablicy dwuwymiarowej.*/
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define S 5
+
+int** dodawanie_macierzy(int tab1[S][S], int tab2[S][S]){
+  
+  int i, j;
+  int tab_s[S][S];
+  int (*ts)[S];
+
+  ts=tab_s;
+  ts = (int (*)[S]) malloc ( S * S * sizeof(int));
+
+  for(i=0; i<S; i++){
+    for(j=0; j<S; j++){
+      *(*(tab_s+i)+j) = *(*(tab1+i)+j) + *(*(tab2+i)+j);
+      printf("%d ", *(*(tab_s+i)+j));
+    }
+    printf("\n");
+  }
+
+  return ts;
+}
+
+int main(void) {
+  
+  int tab1[S][S], tab2[S][S], tab_s[S][S];
+  int (*t1)[S], (*t2)[S], (*ts)[S];
+  srand((unsigned int) time(NULL));
+
+  t1=tab1;
+  t2=tab2;
+  ts=tab_s;
+
+  t1 = (int (*)[S]) malloc ( S * S * sizeof(int));
+  t2 = (int (*)[S]) malloc ( S * S * sizeof(int));
+ 
+
+  for(int i=0; i<S; i++){
+     for(int j=0; j<S; j++){
+      *(*(tab1+i)+j)=rand()%100;
+      printf("%d ",*(*(tab1+i)+j));
+      }
+        printf("\n");
+  }
+  printf("-----------------------------------\n");
+
+  for(int i=0; i<S; i++){
+     for(int j=0; j<S; j++){
+      *(*(tab2+i)+j)=rand()%100;
+      printf("%d ",*(*(tab2+i)+j));
+      }
+        printf("\n");
+  }
+  printf("-----------------------------------\n");
+  
+  dodawanie_macierzy(tab1, tab2);
+
+  free(t1);
+  free(t2);
+  free(ts);
+  
+  
+  return 0;
+}
