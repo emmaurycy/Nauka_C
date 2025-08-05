@@ -1,0 +1,26 @@
+//napisac program silnia n-tego wyrazu, rekurencyjnie
+#include <stdio.h>
+ int silnia(int x);
+
+ void main()
+ {
+  int a=3, b;
+
+  b=silnia(a);
+
+  printf("Silnia z liczby %d wynosi %d",a , b);
+
+
+  return 0;
+ }
+ int silnia(int x)
+ {
+  int s;
+  if (x==0)
+    s=1;
+    else{
+      s=x*silnia(x-1);
+    }
+
+  return s;
+ }
