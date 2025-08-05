@@ -1,0 +1,53 @@
+/*Zadanie 1 Korzystaj ˛ac z funkcji malloc() napisz funkcj ˛e allocate(), która alokuje pami ˛eć
+  dla tablicy trójk ˛atnej o N wierszach. Przyjmuj ˛ac, że numerujemy wiersze od zera, k – ty
+  wiersz powinien składać si ˛e z N − k kolumn (dla N ¬ 1 i k ∈ [0, N − 1]). : Funkcja allocate() powinna pobierać jeden argument w postaci liczby całkowitej oznaczaj ˛acej liczb ˛e
+wierszy wspomnianej tablicy i zwracać wskaźnik do zaalokowanego bloku pami ˛eci.
+Zadanie 2 Napisz funkcj ˛e complete_print(), która wypełni każdy wiersz opisanej w zadaniu
+1 tablicy kolejnymi liczbami naturalnymi poczynaj ˛ac od 1, a nast ˛epnie wyświetli jej zawartość
+wiersz po wierszu. Pogl ˛adowo, dla N = 4 wypełniona tablica powinna wygl ˛adać nast ˛epuj ˛aco:*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#define N 15
+
+int **alocate(int n);
+void complete_print(int **p, int n);
+void dealocate(int **p, int n);
+
+int main(void) {
+
+    int **tab = alocate(N);
+    complete_print(tab, N);
+
+    dealocate(tab, N);
+
+    return 0;
+}
+int **alocate(int n) {
+    int **p;
+
+    p = (int **) malloc(n * sizeof(int *));
+    for(int i = 0; i < n; i++)
+        p[i] = (int *) malloc((n-i) * sizeof(int));
+
+    return p;
+}
+void complete_print(int **p, int n) {
+  
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < n-i; j++)
+            p[i][j] = j + 1;
+  
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n-i; j++)
+            printf("%d ", p[i][j]);
+        printf("\n");
+    }
+}
+
+void dealocate(int **p, int n) {
+    for(int i = 0; i < n; i++)
+        free(p[i]);
+    free(p);
+}
