@@ -1,0 +1,113 @@
+/*Zadanie 3 Zaprojektuj i napisz funkcj  ̨e, która jako argumenty przyjmuje dwa wskaźniki.
+Pierwszy powinien wskazywać na pierwszy element pewnej tablicy liczb całkowitych (int), a
+drugi na ostatni element tej tablicy. Funkcja powinna sortować tablic  ̨e wykorzystuj  ̨ac algorytm
+sortowania b  ̨abelkowego. Funkcja sortuj  ̨ac  ̨a nie może korzystać z indeksowania. Zaprojektuj
+i wykorzystaj funkcj  ̨e pomocnicz  ̨a, która zamienia mi  ̨edzy sob  ̨a wartości wskazywane przez
+dwa wskaźniki b  ̨ed  ̨ace argumentami wywołania tej funkcji. Przetestuj funkcj  ̨e sortuj  ̨ac  ̨a w
+programie na pi  ̨eciu przykładowych tablicach tworzonych dynamicznie. Rozmiary kolejnych
+tablic powinny być podawane przez użytkownika.
+W celu utworzenia tablicy program powinien korzystać z funkcji create_array()
+zwracaj  ̨acej wskaźnik do odpowiedniego bloku pami  ̨eci zalokowanego przy pomocy funkcji
+malloc(). Funkcja create_array() powinna również wypełniać utworzon  ̨a tablic  ̨e losowy-
+mi liczbami z zakresu od −100 do 100. W celu wyświetlenia tablicy program powinien korzy-
+stać z funkcji print_array(), która powinna wyświetlać zawartość tablicy po 10 elementów
+w wierszu. Pami  ̨etaj o zwalnianiu przydzielonej pami  ̨eci korzystaj  ̨ac z funkcji free().*/
+void function(int* wsk1, int* wsk2);
+void change(int* wsk1, int* wsk2);
+int* create_array(int size);
+void print_array(int* tab, int size);
+void f_free(int* tab);
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+int main(void) {
+
+  int size;
+  int *tablica;
+
+  printf("Podaj wielkość tablicy: ");
+  scanf("%d", &size);
+
+  tablica = create_array(size);
+  
+  print_array(tablica, size);
+
+
+  function(tablica, tablica+size-1);
+
+  printf("\n");
+
+  print_array(tablica, size);
+
+  f_free(tablica);
+  
+  return 0;
+}
+
+int* create_array(int size){
+  
+  int* tab;
+  srand(time(NULL));
+  
+  tab = (int *) malloc (size * sizeof(int));
+
+  for(int i=0; i<size; i++){
+    *(tab+i)=rand()%101-rand()%101;
+  }
+
+  return tab;
+}
+void print_array(int* tab, int size){
+
+  int i;
+    
+  for(i=0; i<size; i++){
+    printf("%d ",*(tab+i));
+     if ((i+1)%10==0) printf("\n");
+  }
+
+  return 0;
+}
+void function(int* wsk1, int* wsk2){
+  
+  int i, size=1;//ilosc przejsc
+  int *t1, *t2;
+
+  while (wsk1!=wsk2){
+    
+    wsk2--;
+    size++;
+  } 
+  
+  wsk2++;
+
+  while(size--){
+    t1=wsk1;
+    t2=wsk2;
+    
+    for(i=0; i<size; i++){
+      if(*t1>*t2) change(t1, t2);
+      t1++;
+      t2++;
+    } 
+  }
+  return 0;
+}
+void change(int* wsk1, int* wsk2){
+
+  int temp;
+  temp=*wsk1;
+  *wsk1=*wsk2;
+  *wsk2=temp;
+  
+  return 0;
+}
+void f_free(int* tab){
+
+  free(tab);
+  
+  return 0;
+}
