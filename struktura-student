@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+struct student
+{
+    char imie[20];
+    char nazwisko[50];
+    int ocena;
+};
+
+int main()
+{
+    struct student s;
+
+  double ilosc, srednia, suma=0;
+
+    while (1) {
+
+        printf("Podaj imie studenta lub wpisz 'x' aby obliczyć średnią): ");
+        scanf("%s", s.imie);
+
+        if (strcmp(s.imie, "x") == 0) {
+            break;
+        }
+
+        printf("Podaj nazwisko studenta: ");
+        scanf("%s", s.nazwisko);
+
+        printf("Podaj ocene studenta: ");
+        scanf("%d", &s.ocena);
+
+
+        printf("\nDane studenta:\n");
+        printf(" Imie: %s\n", s.imie);
+        printf(" Nazwisko: %s\n", s.nazwisko);
+        printf(" Ocena: %d\n\n", s.ocena);
+
+    ilosc++;
+      suma=suma+s.ocena;
+  }
+
+
+  srednia=suma/ilosc;
+
+    printf("\nSrednia ocen wynosi: %.2f\n", srednia);
+
+
+
+    return 0;
+}
