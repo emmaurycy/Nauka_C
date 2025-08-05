@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+
+    float a, b, c, wartosc, x, okres, xmin, xmax;
+    int n, i;
+
+    printf("Podaj wspolczynnik a: \n");
+    scanf("%f", &a);
+    printf("Podaj wspolczynnik b: \n");
+    scanf("%f", &b);
+    printf("Podaj wspolczynnik c: \n");
+    scanf("%f", &c);
+    printf("Podaj Xmin: \n");
+    scanf("%f", &xmin);
+    printf("Podaj Xmax: \n");
+    scanf("%f", &xmax);
+    printf("Podaj ilosc wartosci: \n");
+    scanf("%d", &n);
+
+    // Otwieramy plik do zapisu binarnego
+    FILE *plik = fopen("wyniki.bin", "wb");
+    if (plik == NULL) {
+        printf("Nie mozna otworzyc pliku do zapisu!\n");
+        return 1;
+    }
+
+    for(i = 0; i < n; i++) {
+        okres = (xmax - xmin) / n;
+        x = xmin + okres * i;
+        wartosc = (a * x * x) + (b * x) + c;
+        printf("x=%.2f, y=%.2f\n", x, wartosc);
+        fwrite(&x, sizeof(float), 1, plik); // Zapisujemy wartość x w formacie binarnym
+        fwrite(&wartosc, sizeof(float), 1, plik); // Zapisujemy wartość y (wartosc) w formacie binarnym
+    }
+
+    // Zamykamy plik
+    fclose(plik);
+
+    return 0;
+}
