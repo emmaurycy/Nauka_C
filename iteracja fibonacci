@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int fib(int x);
+
+void main()
+{
+  int x=40;
+
+  fib(x);
+
+  return;
+}
+int fib(int x)
+{
+  int i, f;
+  int tab[x];
+  tab[0]=1;
+  tab[1]=1;
+  
+    if (x==0)
+    printf("Podano 0, podaj inną liczbę");
+    else
+    {
+      if (x==1)
+      f=1;
+        else
+        {
+          printf("%d\n", tab[0]);
+          printf("%d\n", tab[1]);
+          for(i=2; i<=x; i++){
+            tab[i]=tab[i-1]+tab[i-2];
+            f=tab[i];
+            printf("%d\n", f);
+          }
+        }
+    }
+
+  return f;
+}
