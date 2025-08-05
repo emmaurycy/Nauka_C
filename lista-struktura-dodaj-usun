@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef struct Student {
+    char imie[50];
+    char nazwisko[50];
+    int numer_albumu;
+    float ocena;
+    struct Student* nastepny;
+} Student;
+
+
+Student* nowyStudent(const char* imie, const char* nazwisko, int numer_albumu, float ocena) {
+    Student* nowy = (Student*)malloc(sizeof(Student));
+    if (nowy == NULL) {
+        printf("Błąd alokacji pamięci!\n");
+        exit(1);
+    }
+    strncpy(nowy->imie, imie, 50);
+    strncpy(nowy->nazwisko, nazwisko, 50);
+    nowy->numer_albumu = numer_albumu;
+    nowy->ocena = ocena;
+    nowy->nastepny = NULL;
+    return nowy;
+}
+
+
+void dodajStudenta(Student** glowa, const char* imie, const char* nazwisko, int numer_albumu, float ocena) {
+    Student* nowy = nowyStudent(imie, nazwisko, numer_albumu, ocena);
+    nowy->nastepny = *glowa;
+    *glowa = nowy;
+}
+
+
+void usunStudenta(Student** glowa, int numer_albumu) {
+    Student* temp = *glowa;
+    Student* poprzedni = NULL;
+
+    
+    if (temp != NULL && temp->numer_albumu == numer_albumu) {
+        *glowa = temp->nastepny; 
+        free(temp); 
+        return;
+    }
+
+    
+    while (temp != NULL && temp->numer_albumu != numer_albumu) {
+        poprzedni = temp;
+        temp = temp->nastepny;
+    }
+
+    
+    if (temp == NULL) {
+        printf("Student o numerze albumu %d nie istnieje.\n", numer_albumu);
+        return;
+    }
+
+    
+    poprzedni->nastepny = temp->nastepny;
+    free(temp);
+}
+
+
+void wyswietlListe(Student* glowa) {
+    Student* temp = glowa;
+    while (temp != NULL) {
+        printf("Imię: %s, Nazwisko: %s, Numer Albumu: %d, Ocena: %.2f\n",
+               temp->imie, temp->nazwisko, temp->numer_albumu, temp->ocena);
+        temp = temp->nastepny;
+    }
+}
+
+int main() {
+    Student* glowa = NULL;
+
+    dodajStudenta(&glowa, "Jan", "Kowalski", 12345, 4.5);
+    dodajStudenta(&glowa, "Anna", "Nowak", 67890, 3.0);
+    dodajStudenta(&glowa, "Piotr", "Wiśniewski", 11223, 5.0);
+
+    printf("Lista studentów:\n");
+    wyswietlListe(glowa);
+
+    printf("\nUsuwanie studenta o numerze albumu 67890\n");
+    usunStudenta(&glowa, 67890);
+
+    printf("\nLista studentów po usunięciu:\n");
+    wyswietlListe(glowa);
+
+
+    return 0;
+}
