@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    char letter;
+    struct Node* next;
+};
+
+struct Node* createNode(char value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Błąd alokacji pamięci\n");
+        exit(1);
+    }
+    newNode->letter = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void append(struct Node** headRef, char value) {
+    struct Node* newNode = createNode(value);
+    if (*headRef == NULL) {
+        *headRef = newNode;
+        return;
+    }
+    struct Node* lastNode = *headRef;
+    while (lastNode->next != NULL) {
+        lastNode = lastNode->next;
+    }
+    lastNode->next = newNode;
+}
+
+void display(struct Node* head) {
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%c -> ", current->letter);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+
+void deleteLast(struct Node** headRef) {
+    if (*headRef == NULL) {
+        printf("Lista jest pusta, brak elementów do usunięcia.\n");
+        return;
+    }
+    if ((*headRef)->next == NULL) {
+        free(*headRef);
+        *headRef = NULL;
+        return;
+    }
+    struct Node* current = *headRef;
+    struct Node* previous = NULL;
+    while (current->next != NULL) {
+        previous = current;
+        current = current->next;
+    }
+    previous->next = NULL;
+    free(current);
+}
+
+int main() {
+    struct Node* head = NULL;
+    append(&head, 'A');
+    append(&head, 'B');
+    append(&head, 'C');
+    append(&head, 'D');
+
+    printf("Zawartość listy: ");
+    display(head);
+
+    deleteLast(&head);
+    printf("Po usunięciu ostatniego elementu: ");
+    display(head);
+
+    return 0;
+}
