@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int fib(int x);
+
+void main()
+{
+  int x;
+
+  printf("Podaj, którą liczbę obliczyć: ");
+  scanf("%d", &x);
+  
+  fib(x);
+
+  return;
+}
+int fib(int x)
+{
+  int i, f;
+  int tab[x];
+  tab[0]=1;
+  tab[1]=1;
+
+    if (x==0)
+    printf("Podano 0, podaj inną liczbę");
+    else
+    {
+      if (x==1 || x==2)
+      f=1;
+        else
+        {
+          for(i=2; i<x; i++){
+            tab[i]=tab[i-1]+tab[i-2];
+          }
+        }
+      printf("Liczba %d wynosi: %d", x, tab[x-1]);
+    }
+
+  
+  
+  return f;
+}
