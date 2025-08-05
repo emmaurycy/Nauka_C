@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int main(void) {
+
+  printf("Wybierz, co chcesz zrobić: 1: zobaczyć tablicę, kolumna, 2-wiersz, 3-przekatna: ");
+  scanf("%d", &x);
+
+  if(x==1) 
+    {
+      printf("Podaj ktora kolumna: ");
+      scanf("%d", &k);
+    }
+  if(x==2) 
+    {
+      printf("Podaj ktory wiersz: ");
+      scanf("%d", &w);
+    }
+
+  if(x==1)
+  {
+    kolumna(tab, k);
+  }
+  if(x==2)
+  {
+    wiersz(tab, w);
+  }
+
+  if(x==3)
+  {
+    przekatna(tab, 10);
+  }
+
+  return 0;
+
+}
