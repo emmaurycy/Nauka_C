@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct wezel {
+  int indeks;
+  struct wezel* nastepny;
+}wezel;
+
+void dodaj(wezel** lista);
+
+void polacz(wezel** lista, wezel* nowa_pozycja);
+
+void wyswietl_liste(wezel* lista);
+
+void uwolnij_pamiec(wezel** lista);
+
+int main(){
+
+  wezel* lista_studentow = NULL;
+  int i;
+
+  for (i=0; i<3; i++)
+    dodaj(&lista_studentow);
+
+  wyswietl_liste(lista_studentow);
+  uwolnij_pamiec(&lista_studentow);
+
+  return 0;
+}
+
+void dodaj(wezel** lista){
+  printf("Podaj numer indeksu: \n");
+  int indeks;
+  scanf ("%d", &indeks);
+  wezel* nowa_pozycja = (wezel *)malloc(sizeof(wezel));
+  nowa_pozycja->indeks = indeks;
+  nowa_pozycja->nastepny = NULL; 
+  polacz(lista, nowa_pozycja);
+}
+
+void polacz(wezel** lista, wezel* nowa_pozycja){
+
+  struct wezel* licznik;
+
+  if(*lista == NULL){
+    *lista = nowa_pozycja;
+  }
+
+  else {
+    for(licznik = *lista; licznik != NULL; licznik = licznik->nastepny){
+
+      if(licznik->nastepny == NULL){
+        licznik->nastepny = nowa_pozycja;
+        break;
+      }
+
+    }
+  }
+}
+
+void wyswietl_liste(wezel* lista){
+
+  struct wezel* licznik;
+
+  printf("Lista studentow: \n");
+
+  for(licznik = lista; licznik != NULL; licznik = licznik->nastepny){
+    printf("%d \n", licznik->indeks);
+
+  }
+
+}
+
+void uwolnij_pamiec(wezel** lista){
+
+  struct wezel* licznik;
+
+  for(licznik = *lista; licznik != NULL; licznik = licznik->nastepny){
+    free(licznik);
+  }
+
+}
