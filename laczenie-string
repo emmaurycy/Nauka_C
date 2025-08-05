@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  
+  int i, j=0, l, l1, l2;
+  
+  char napis1[20];
+  char napis2[20];
+
+  scanf("%s", napis1);
+  scanf("%s", napis2);
+
+  printf("napis 1: %s\n", napis1);
+  printf("napis 2: %s\n", napis2);
+
+  printf("litera: %c\n", napis1[3]);
+  
+  napis1[3]=napis2[0];
+  
+  printf("litera: %c\n", napis1[3]);
+
+  l1=strlen(napis1);
+  l2=strlen(napis2);
+  l=l1+l2;
+  printf("dlugosc = %d\n", l);
+
+  for(i=l1; i<=l; i++) {
+    napis1[i]=napis2[j];
+    j++;
+    }
+  
+  printf("napis 1: %s\n", napis1);
+  
+  return 0;
+}
