@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void los(int t2w[][10], int w);
+int max(int t2w[][10], int w);
+void print_table(int t2w[][10], int w);
+void print_row(int t2w[][10], int r);
+void print_column(int t2w[][10], int w, int c);
+void print_diagonal(int t2w[][10], int w);
+void change_rows(int t2w[][10], int r1, int r2);
+void change_columns(int t2w[][10], int w, int c1, int c2);
+
+int main (void)
+{
+  int tab[10][10];
+  int a, maksymalna, r1, r2, c1, c2;
+  a=10;
+  r1=2;
+  r2=3;
+  c1=5;
+  c2=6;
+
+  los(tab, a);
+  
+  printf("\ntablica:\n");
+  print_table(tab, a);
+
+  printf("\nmaksymalna liczba w tablicy: %d\n", max(tab, a));
+
+  printf("\nwiersz nr %d:\n", r1);
+  print_row(tab, r1);
+  
+  printf("\nkolumna nr %d:\n", c1);
+  print_column(tab, a, c1);
+  
+  printf("\nprzekątne:\n");
+  print_diagonal(tab, a);
+
+  printf("\npo zamianie wierszy %d i %d:\n", r1, r2);
+  change_rows(tab, r1, r2);
+  print_table(tab, a);
+  
+  printf("\npo zamianie wierszy %d i %d:\n", c1, c2);
+  change_columns(tab, a, c1, c2);
+  print_table(tab, a);
+
+
+  return 0;
+}
+void los(int t2w[][10], int w)
+{
+  int i, j;
+  srand(time(NULL));
+  for(i=0; i<w ; i++)
+  {
+    for(j=0; j<10; j++)
+      {
+      t2w[i][j]=rand()%10;
+      }
+  }
+  return 0;
+}
+
+int max(int t2w[][10], int w)
+{
+  int i, j, maxi=0;
+  for(i=0; i<w; i++)
+  {
+    for(j=0; j<10; j++)
+      {
+      if (t2w[i][j]>maxi) maxi=t2w[i][j];
+      }
+  }
+
+  return maxi;
+}
+void print_table(int t2w[][10], int w){
+
+  int i, j;
+  
+  for(i=0; i<w ; i++)
+    {
+      for(j=0; j<10; j++)
+        {
+        printf("%d ", t2w[i][j]);
+        }
+      printf("\n");
+    }
+    return 0;
+  
+}
+void print_row(int t2w[][10], int r){
+
+  int j;
+
+      for(j=0; j<10; j++)
+        {
+        printf("%d ", t2w[r][j]);
+        }
+  
+    return 0;
+
+}
+void print_column(int t2w[][10], int w, int c){
+
+  int j;
+ 
+      for(j=0; j<10; j++)
+        {
+        printf("%d ", t2w[j][c]);
+        }
+      printf("\n");
+
+    return 0; 
+
+}
+void print_diagonal(int t2w[][10], int w){
+
+  int i, j=9;
+
+      for(i=0; i<10; i++)
+        {
+        printf("%d ", t2w[i][i]);
+        }
+      printf("\n");
+  
+      for(i=0; i<w ; i++) //09 18 27 36 45
+        {
+          printf("%d ", t2w[i][j]);
+          j--; 
+        }
+     printf("\n");
+    return 0;
+}
+
+void change_rows(int t2w[][10], int r1, int r2){
+
+  int j, temp;
+
+    for(j=0; j<10; j++)
+      {
+        temp=t2w[r1][j];
+        t2w[r1][j]=t2w[r2][j];
+        t2w[r2][j]=temp;
+      }
+
+  return 0;
+}
+void change_columns(int t2w[][10], int w, int c1, int c2){
+
+  int i, temp;
+
+    for(i=0; i<10; i++)
+      {
+        temp=t2w[i][c1];
+        t2w[i][c1]=t2w[i][c2];
+        t2w[i][c2]=temp;
+      }
+
+  return 0;  
+}
