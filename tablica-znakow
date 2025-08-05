@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void){
+
+  int i, n=7;
+
+  //tablica znaków
+  char tab[7] = {'P','r','o','g','r','a','m'};
+
+  tab[n]=(char*) malloc (n*sizeof(char));
+  
+  if (tab == NULL) printf("Błąd alokacji pamięci!\n");
+  
+  printf("To jest tablica znaków:\n");
+  for(i=0; i<n; i++){
+    printf("%c ", *(tab+i));
+  }
+  printf("\n\n");
+
+  free(tab);
+  
+  //łańcuch znakowy zapisany w tablicy
+  char str [] = "Programowanie proceduralne";
+
+  str[30]=(char*) malloc (30 * sizeof(char));
+  if (str == NULL) printf("Błąd alokacji pamięci!\n");
+
+  printf("To jest łańcuch znakowy zapisany w tablicy:\n");
+  printf("%s\n", str);
+
+  free(str);
+
+  return 0;
+}
+
