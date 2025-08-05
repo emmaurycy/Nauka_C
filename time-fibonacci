@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <time.h>
+
+int fibb_iteracja(int x);
+int fibb_rekurencja(int x);
+
+int main(void)
+{
+  
+  int x=30;
+  clock_t start_i, end_i, start_r, end_r;
+  double time_i, time_r;
+  const char* filename_i= "execution_time_i.txt";
+  const char* filename_r= "execution_time_r.txt";
+  
+  start_i= clock();
+  fibb_iteracja(x);
+  end_i= clock();
+
+  time_i = ((double) (end_i - start_i)) / CLOCKS_PER_SEC;
+
+  FILE *plik_i = fopen("execution_time_i.txt", "w");
+  if (plik_i == NULL) {
+      printf("Nie mozna otworzyc pliku do zapisu!\n");
+      return 1;
+  }
+  fprintf(plik_i, "Czas wykonania dla iteracji: %f sekund\n", time_i);
+  fclose(plik_i);
+
+  printf("Czas wykonania dla iteracji: %f sekund\n", time_i);
+
+  
+  
+  start_r= clock();
+  fibb_rekurencja(x);
+  end_r= clock();
+
+  time_r = ((double) (end_r - start_r)) / CLOCKS_PER_SEC;
+
+  FILE *plik_r = fopen("execution_time_r.txt", "w");
+  if (plik_r == NULL) {
+      printf("Nie mozna otworzyc pliku do zapisu!\n");
+      return 1;
+  }
+  fprintf(plik_r, "Czas wykonania dla rekurencji: %f sekund\n", time_r);
+  fclose(plik_r);
+
+  printf("Czas wykonania dla rekurencji: %f sekund\n", time_r);
+  
+  return 0;
+}
+
+int fibb_iteracja(int x)
+{
+  int i, f;
+  int tab[x];
+  tab[0]=1;
+  tab[1]=1;
+
+  if (x==0)
+  f=0;
+    else
+    {
+      if (x==1)
+      f=1;
+        else
+        {
+          for(i=2; i<x; i++){
+            tab[i]=tab[i-1]+tab[i-2];
+            f=tab[i];
+          }
+        }
+    }
+
+  return f;
+}
+
+int fibb_rekurencja(int x)
+{
+  int i, f;
+
+  if (x==0)
+  f=0;
+    else
+    {
+      if (x==1)
+      f=1;
+        else
+        {
+        f=fibb_rekurencja(x-1)+fibb_rekurencja(x-2);
+        }
+    }
+
+  return f;
+}
